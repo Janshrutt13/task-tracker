@@ -53,7 +53,44 @@ export const createTask = async (req: AuthRequest, res: Response) => {
     }
 };
 
-// Removed updateTask as requested
+// PATCH/tasks/:id — Update a task (title, description, status)
+export const updateTask = async (req: AuthRequest, res: Response) => {
+    try {
+        const taskId = parseInt(req.params['id'] ?? '', 10);
+        const user = req.user;
+        const { title, description, status } = req.body;
+
+        if (!user) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        const task = await prisma.task.findUnique({ where: { id: taskId } });
+
+        if (!task) {
+            return res.status(404).json({ message: 'Task not found' });
+        }
+
+        // Only the task owner or an admin can update a task
+        if (task.authorId !== user.id && user.role !== 'admin') {
+            return res.status(403).json({ message: 'Forbidden' });
+        }
+
+        const updatedTask = await prisma.task.update({
+            where: { id: taskId },
+            data: {
+                ...(title !== undefined && { title }),
+                ...(description !== undefined && { description }),
+                ...(status !== undefined && { status }),
+            },
+        });
+
+        res.json(updatedTask);
+    } catch (error) {
+        console.error('Error updating task:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
 // DELETE/tasks/:id — Delete a task
 export const deleteTask = async (req: AuthRequest, res: Response) => {
     try {

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getTasks, createTask, deleteTask } from '../controllers/taskController.js';
+import { getTasks, createTask, updateTask, deleteTask } from '../controllers/taskController.js';
 import { verifyToken } from '../middleware/authMiddleware.js';
 import { validateTask } from '../middleware/validationMiddleware.js';
 
@@ -10,9 +10,8 @@ router.use(verifyToken);
 
 // Routes
 router.get('/', getTasks);
-router.post('/', createTask);
+router.post('/', validateTask, createTask);
+router.patch('/:id', updateTask);
 router.delete('/:id', deleteTask);
-router.post('/', verifyToken, validateTask, createTask);
 
 export default router;
-
