@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { CheckCircle, Mail, Lock, Eye, EyeOff, User, Moon, Sun } from 'lucide-react';
+import { CheckCircle, Mail, Lock, Eye, EyeOff, User, Moon, Sun, Shield } from 'lucide-react';
 
 const RegisterPage = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [adminCode, setAdminCode] = useState('');
+    const [showAdminField, setShowAdminField] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -34,7 +36,7 @@ const RegisterPage = () => {
 
         setLoading(true);
         try {
-            await register(email, password, name);
+            await register(email, password, name, adminCode || undefined);
             // Auto-login after successful registration
             await login(email, password);
             navigate('/dashboard');
@@ -137,6 +139,47 @@ const RegisterPage = () => {
                                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                                 </button>
                             </div>
+                        </div>
+
+                        {/* Admin Code (collapsible) */}
+                        <div>
+                            <button
+                                type="button"
+                                onClick={() => setShowAdminField(!showAdminField)}
+                                style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    color: 'var(--text-muted)',
+                                    fontSize: '0.75rem',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    padding: 0,
+                                    fontFamily: 'inherit',
+                                    fontWeight: 600,
+                                }}
+                            >
+                                <Shield size={14} />
+                                {showAdminField ? 'Hide Admin Code' : 'Have an admin code?'}
+                            </button>
+                            {showAdminField && (
+                                <div className="input-group" style={{ marginTop: '8px' }}>
+                                    <label htmlFor="reg-admin-code">Admin Secret Code</label>
+                                    <div className="input-icon-wrapper">
+                                        <Shield size={18} className="input-icon-left" />
+                                        <input
+                                            id="reg-admin-code"
+                                            type="text"
+                                            className="input input-with-icon"
+                                            placeholder="Enter admin code"
+                                            value={adminCode}
+                                            onChange={(e) => setAdminCode(e.target.value)}
+                                            autoComplete="off"
+                                        />
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <button type="submit" className="btn btn-primary" disabled={loading}>

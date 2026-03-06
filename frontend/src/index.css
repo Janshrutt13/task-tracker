@@ -468,7 +468,23 @@ body {
     }
 }
 
-/* ===== MODAL OVERLAY (used by AddTaskModal) ===== */
+.toast-dismiss {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    margin-left: 4px;
+    transition: color 150ms ease;
+}
+
+.toast-dismiss:hover {
+    color: white;
+}
+
+/* ===== MODAL OVERLAY (used by TaskModal) ===== */
 .modal-overlay {
     position: fixed;
     inset: 0;

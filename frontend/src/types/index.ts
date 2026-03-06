@@ -28,3 +28,15 @@ export interface AuthResponse {
     token: string;
     user: User;
 }
+
+export interface CreateTaskInput {
+    title: string;
+    description?: string;
+    status?: 'pending' | 'completed';
+}
+
+export interface UpdateTaskInput {
+    title?: string;
+    description?: string;
+    status?: 'pending' | 'completed';
+}

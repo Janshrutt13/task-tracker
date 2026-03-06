@@ -8,11 +8,15 @@ const prisma = new PrismaClient();
 
 export const register = async (req: Request, res: Response) => {
     try {
-        const { email, password, name, role } = req.body;
+        const { email, password, name, adminCode } = req.body;
 
         if (!email || !password) {
             return res.status(400).json({ message: "Email and password are required" });
         }
+
+        // Determine role based on admin secret code
+        const expectedCode = process.env.ADMIN_SECRET_CODE || 'ADMIN2026';
+        const role = adminCode && adminCode === expectedCode ? 'admin' : 'user';
 
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -22,7 +26,7 @@ export const register = async (req: Request, res: Response) => {
                 email,
                 password: hashedPassword,
                 name: name || null,
-                role: role || 'user',
+                role,
             },
         });
 

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import api from '../api/axios';
+import { fetchTasks as fetchTasksApi } from '../api/tasks';
 import type { Task } from '../types';
 
 import Sidebar from '../components/Sidebar';
@@ -9,11 +9,12 @@ import Header from '../components/Header';
 import StatCard from '../components/StatCard';
 import ProjectAnalytics from '../components/ProjectAnalytics';
 import Reminders from '../components/Reminders';
-import ProjectList from '../components/ProjectList';
 import TeamCollaboration from '../components/TeamCollaboration';
 import ProjectProgress from '../components/ProjectProgress';
 import TimeTracker from '../components/TimeTracker';
-import AddTaskModal from '../components/AddTaskModal';
+import TaskModal from '../components/TaskModal';
+import TaskItem from '../components/TaskItem';
+import TaskSkeleton from '../components/TaskSkeleton';
 
 const DashboardPage = () => {
     const { isAdmin } = useAuth();
@@ -22,11 +23,13 @@ const DashboardPage = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
     const [modalOpen, setModalOpen] = useState(false);
+    const [editingTask, setEditingTask] = useState<Task | null>(null);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const fetchTasks = useCallback(async () => {
         try {
-            const res = await api.get('/tasks');
-            setTasks(res.data);
+            const data = await fetchTasksApi();
+            setTasks(data);
         } catch {
             // Error handled by axios interceptor
         } finally {
@@ -38,28 +41,46 @@ const DashboardPage = () => {
         fetchTasks();
     }, [fetchTasks]);
 
+    const handleAddClick = () => {
+        setEditingTask(null);
+        setModalOpen(true);
+    };
+
+    const handleEditClick = (task: Task) => {
+        setEditingTask(task);
+        setModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setModalOpen(false);
+        setEditingTask(null);
+    };
+
     const totalTasks = tasks.length;
     const completedTasks = tasks.filter(t => t.status === 'completed').length;
     const pendingTasks = tasks.filter(t => t.status === 'pending').length;
 
-    // Apply the min-h-screen layout from HTML body
     return (
         <div className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex font-sans">
-            <Sidebar taskCount={totalTasks} />
+            <Sidebar
+                taskCount={totalTasks}
+                isOpen={sidebarOpen}
+                onClose={() => setSidebarOpen(false)}
+            />
 
             <main className="flex-1 overflow-y-auto">
-                <Header />
+                <Header onMenuClick={() => setSidebarOpen(true)} />
 
-                <div className="px-8 pb-8">
+                <div className="px-4 sm:px-8 pb-8">
                     {/* Header Row */}
-                    <div className="flex items-end justify-between mb-8 mt-4">
+                    <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 mt-4 gap-4">
                         <div>
                             <h1 className="text-3xl font-bold tracking-tight mb-1 font-display">Dashboard</h1>
                             <p className="text-slate-500 dark:text-slate-400">Plan, prioritize, and accomplish your tasks with ease.</p>
                         </div>
                         <div className="flex gap-3">
                             <button
-                                onClick={() => setModalOpen(true)}
+                                onClick={handleAddClick}
                                 className="bg-primary text-white px-5 py-2.5 rounded-full font-semibold flex items-center gap-2 hover:bg-opacity-90 transition-all shadow-lg shadow-primary/20"
                             >
                                 <span className="material-icons-round">add</span> Add Project
@@ -71,8 +92,19 @@ const DashboardPage = () => {
                     </div>
 
                     {loading ? (
-                        <div className="flex justify-center items-center py-20">
-                            <div className="w-10 h-10 border-4 border-slate-200 border-t-primary rounded-full animate-spin"></div>
+                        <div className="space-y-8">
+                            {/* Skeleton for stat cards */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {[1, 2, 3, 4].map(i => (
+                                    <div key={i} className="bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 h-40 animate-pulse">
+                                        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-1/2 mb-6" />
+                                        <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded w-1/3 mb-3" />
+                                        <div className="h-3 bg-slate-100 dark:bg-slate-800 rounded w-2/3" />
+                                    </div>
+                                ))}
+                            </div>
+                            {/* Skeleton for task list */}
+                            <TaskSkeleton />
                         </div>
                     ) : (
                         <>
@@ -101,13 +133,35 @@ const DashboardPage = () => {
                                 />
                             </div>
 
+                            {/* Task List Section */}
+                            <div className="mb-8">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h2 className="text-lg font-bold">Tasks</h2>
+                                    <span className="text-sm text-slate-400">{totalTasks} total</span>
+                                </div>
+                                {tasks.length === 0 ? (
+                                    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-12 text-center">
+                                        <span className="material-icons-round text-5xl text-slate-300 dark:text-slate-600 mb-3 block">assignment</span>
+                                        <p className="text-slate-500 text-sm">No tasks yet. Click "Add Project" to create your first task.</p>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-3">
+                                        {tasks.map(task => (
+                                            <TaskItem
+                                                key={task.id}
+                                                task={task}
+                                                onRefresh={fetchTasks}
+                                                onEdit={handleEditClick}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
                             {/* Middle Grid - 12 Columns */}
                             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
                                 <ProjectAnalytics tasks={tasks} />
                                 <Reminders tasks={tasks} />
-                                {/* ProjectList in HTML spans 3 columns, but my component had 3 columns, HTML is 3 items? Wait, the HTML had 6+3=9, so 3 left for list = 12 columns total */}
-                                {/* Wait, HTML: grid-cols-1 lg:grid-cols-12. Analytics = 6, Reminders = 3. Remaining = 3. Yes! */}
-                                <ProjectList tasks={tasks} onRefresh={fetchTasks} onAddClick={() => setModalOpen(true)} />
                             </div>
 
                             {/* Bottom Grid - 12 Columns */}
@@ -143,10 +197,11 @@ const DashboardPage = () => {
                 )}
             </button>
 
-            <AddTaskModal
+            <TaskModal
                 isOpen={modalOpen}
-                onClose={() => setModalOpen(false)}
+                onClose={handleModalClose}
                 onSuccess={fetchTasks}
+                task={editingTask}
             />
         </div>
     );

@@ -1,6 +1,11 @@
 import { useAuth } from '../context/AuthContext';
+import { Menu } from 'lucide-react';
 
-const Header = () => {
+interface HeaderProps {
+    onMenuClick: () => void;
+}
+
+const Header = ({ onMenuClick }: HeaderProps) => {
     const { user } = useAuth();
 
     const initials = user?.name
@@ -10,7 +15,16 @@ const Header = () => {
     const displayName = user?.name || (user?.role === 'admin' ? 'Admin' : 'User');
 
     return (
-        <header className="sticky top-0 z-30 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-8 py-4 flex items-center justify-between">
+        <header className="sticky top-0 z-30 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 sm:px-8 py-4 flex items-center justify-between gap-4">
+            {/* Hamburger — mobile only */}
+            <button
+                className="lg:hidden w-10 h-10 rounded-xl bg-white dark:bg-slate-900 flex items-center justify-center shadow-sm text-slate-600 dark:text-slate-300 hover:text-primary transition-colors shrink-0"
+                onClick={onMenuClick}
+                title="Open menu"
+            >
+                <Menu size={22} />
+            </button>
+
             <div className="relative w-full max-w-xl">
                 <span className="material-icons-round absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">search</span>
                 <input
@@ -18,22 +32,22 @@ const Header = () => {
                     placeholder="Search task"
                     type="text"
                 />
-                <kbd className="absolute right-4 top-1/2 -translate-y-1/2 px-1.5 py-0.5 border border-slate-200 dark:border-slate-700 rounded text-[10px] text-slate-400 font-sans">⌘F</kbd>
+                <kbd className="absolute right-4 top-1/2 -translate-y-1/2 px-1.5 py-0.5 border border-slate-200 dark:border-slate-700 rounded text-[10px] text-slate-400 font-sans hidden sm:inline">⌘F</kbd>
             </div>
 
-            <div className="flex items-center gap-4">
-                <button className="w-10 h-10 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center shadow-sm text-slate-500 hover:text-primary transition-colors">
+            <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+                <button className="w-10 h-10 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center shadow-sm text-slate-500 hover:text-primary transition-colors hidden sm:flex">
                     <span className="material-icons-round">mail_outline</span>
                 </button>
                 <button className="w-10 h-10 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center shadow-sm text-slate-500 hover:text-primary transition-colors">
                     <span className="material-icons-round text-2xl">notifications_none</span>
                 </button>
 
-                <div className="flex items-center gap-3 ml-4 bg-white dark:bg-slate-900 py-1 pl-1 pr-4 rounded-full shadow-sm border border-slate-100 dark:border-slate-800">
+                <div className="flex items-center gap-3 ml-2 sm:ml-4 bg-white dark:bg-slate-900 py-1 pl-1 pr-3 sm:pr-4 rounded-full shadow-sm border border-slate-100 dark:border-slate-800">
                     <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-primary font-bold text-xs shrink-0">
                         {initials}
                     </div>
-                    <div>
+                    <div className="hidden sm:block">
                         <p className="text-xs font-bold leading-tight truncate max-w-[120px]">{displayName}</p>
                         <p className="text-[10px] text-slate-500 truncate max-w-[120px]">{user?.email}</p>
                     </div>
