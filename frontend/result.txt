@@ -1,0 +1,482 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90mC:/Users/lenovo/task-tracker/frontend[39m
+
+ [31m❯[39m src/tests/LoginForm.test.tsx [2m([22m[2m5 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 3389[2mms[22m[39m
+     [33m[2m✓[22m[39m renders the login form correctly [33m 303[2mms[22m[39m
+     [32m✓[39m shows validation error when email is empty and form is submitted[32m 158[2mms[22m[39m
+[31m     [31m×[31m shows validation error for invalid email format[39m[33m 1721[2mms[22m[39m
+     [33m[2m✓[22m[39m shows validation error when password is too short [33m 567[2mms[22m[39m
+     [33m[2m✓[22m[39m does not show errors when valid data is provided [33m 637[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/tests/LoginForm.test.tsx[2m > [22mLoginForm[2m > [22mshows validation error for invalid email format
+[31m[1mTestingLibraryElementError[22m[39m: Unable to find an element with the text: Please enter a valid email address. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"auth-page"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"auth-container"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"auth-logo"[39m
+        [36m>[39m
+          [36m<h1>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-circle-check-big"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"32"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"32"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"M21.801 10A10 10 0 1 1 17 3.335"[39m
+              [36m/>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m9 11 3 3L22 4"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [0mTaskTracker[0m
+          [36m</h1>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"auth-card"[39m
+        [36m>[39m
+          [36m<h2>[39m
+            [0mWelcome Back![0m
+          [36m</h2>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"subtitle"[39m
+          [36m>[39m
+            [0mSign in to continue managing your tasks.[0m
+          [36m</p>[39m
+          [36m<form[39m
+            [33mclass[39m=[32m"auth-form"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"input-group"[39m
+            [36m>[39m
+              [36m<label[39m
+                [33mfor[39m=[32m"login-email"[39m
+              [36m>[39m
+                [0mEmail Address[0m
+              [36m</label>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"input-icon-wrapper"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-mail input-icon-left"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"[39m
+                  [36m/>[39m
+                  [36m<rect[39m
+                    [33mheight[39m=[32m"16"[39m
+                    [33mrx[39m=[32m"2"[39m
+                    [33mwidth[39m=[32m"20"[39m
+                    [33mx[39m=[32m"2"[39m
+                    [33my[39m=[32m"4"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<input[39m
+                  [33mautocomplete[39m=[32m"email"[39m
+                  [33mclass[39m=[32m"input input-with-icon "[39m
+                  [33mid[39m=[32m"login-email"[39m
+                  [33mname[39m=[32m"email"[39m
+                  [33mplaceholder[39m=[32m"name@company.com"[39m
+                  [33mtype[39m=[32m"email"[39m
+                [36m/>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"input-group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"input-label-row"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mfor[39m=[32m"login-password"[39m
+                [36m>[39m
+                  [0mPassword[0m
+                [36m</label>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"input-label-link"[39m
+                [36m>[39m
+                  [0mForgot Password?[0m
+                [36m</span>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"input-icon-wrapper"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-lock input-icon-left"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"18"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"18"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<rect[39m
+                    [33mheight[39m=[32m"11"[39m
+                    [33mrx[39m=[32m"2"[39m
+                    [33mry[39m=[32m"2"[39m
+                    [33mwidth[39m=[32m"18"[39m
+                    [33mx[39m=[32m"3"[39m
+                    [33my[39m=[32m"11"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M7 11V7a5 5 0 0 1 10 0v4"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<input[39m
+                  [33mautocomplete[39m=[32m"current-password"[39m
+                  [33mclass[39m=[32m"input input-with-icon input-with-right-icon "[39m
+                  [33mid[39m=[32m"login-password"[39m
+                  [33mname[39m=[32m"password"[39m
+                  [33mplaceholder[39m=[32m"••••••••"[39m
+                  [33mtype[39m=[32m"password"[39m
+                [36m/>[39m
+                [36m<button[39m
+                  [33mclass[39m=[32m"input-icon-right-btn"[39m
+                  [33mtabindex[39m=[32m"-1"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-eye"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"18"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"18"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"[39m
+                    [36m/>[39m
+                    [36m<circle[39m
+                      [33mcx[39m=[32m"12"[39m
+                      [33mcy[39m=[32m"12"[39m
+                      [33mr[39m=[32m"3"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                [36m</button>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<button[39m
+              [33mclass[39m=[32m"btn btn-primary"[39m
+              [33mtype[39m=[32m"submit"[39m
+            [36m>[39m
+              [0mSign In[0m
+            [36m</button>[39m
+          [36m</form>[39m
+        [36m</div>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"auth-footer"[39m
+        [36m>[39m
+          [0mDon't have an account? [0m
+          [36m<a[39m
+            [33mdata-discover[39m=[32m"true"[39m
+            [33mhref[39m=[32m"/register"[39m
+          [36m>[39m
+            [0mSign Up[0m
+          [36m</a>[39m
+        [36m</p>[39m
+      [36m</div>[39m
+      [36m<button[39m
+        [33mclass[39m=[32m"auth-dark-toggle"[39m
+        [33mtitle[39m=[32m"Toggle dark mode"[39m
+      [36m>[39m
+        [36m<svg[39m
+          [33maria-hidden[39m=[32m"true"[39m
+          [33mclass[39m=[32m"lucide lucide-moon"[39m
+          [33mfill[39m=[32m"none"[39m
+          [33mheight[39m=[32m"20"[39m
+          [33mstroke[39m=[32m"currentColor"[39m
+          [33mstroke-linecap[39m=[32m"round"[39m
+          [33mstroke-linejoin[39m=[32m"round"[39m
+          [33mstroke-width[39m=[32m"2"[39m
+          [33mviewBox[39m=[32m"0 0 24 24"[39m
+          [33mwidth[39m=[32m"20"[39m
+          [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+        [36m>[39m
+          [36m<path[39m
+            [33md[39m=[32m"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"[39m
+          [36m/>[39m
+        [36m</svg>[39m
+      [36m</button>[39m
+    [36m</div>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"auth-page"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"auth-container"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"auth-logo"[39m
+          [36m>[39m
+            [36m<h1>[39m
+              [36m<svg[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mclass[39m=[32m"lucide lucide-circle-check-big"[39m
+                [33mfill[39m=[32m"none"[39m
+                [33mheight[39m=[32m"32"[39m
+                [33mstroke[39m=[32m"currentColor"[39m
+                [33mstroke-linecap[39m=[32m"round"[39m
+                [33mstroke-linejoin[39m=[32m"round"[39m
+                [33mstroke-width[39m=[32m"2"[39m
+                [33mviewBox[39m=[32m"0 0 24 24"[39m
+                [33mwidth[39m=[32m"32"[39m
+                [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+              [36m>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"M21.801 10A10 10 0 1 1 17 3.335"[39m
+                [36m/>[39m
+                [36m<path[39m
+                  [33md[39m=[32m"m9 11 3 3L22 4"[39m
+                [36m/>[39m
+              [36m</svg>[39m
+              [0mTaskTracker[0m
+            [36m</h1>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"auth-card"[39m
+          [36m>[39m
+            [36m<h2>[39m
+              [0mWelcome Back![0m
+            [36m</h2>[39m
+            [36m<p[39m
+              [33mclass[39m=[32m"subtitle"[39m
+            [36m>[39m
+              [0mSign in to continue managing your tasks.[0m
+            [36m</p>[39m
+            [36m<form[39m
+              [33mclass[39m=[32m"auth-form"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"input-group"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mfor[39m=[32m"login-email"[39m
+                [36m>[39m
+                  [0mEmail Address[0m
+                [36m</label>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"input-icon-wrapper"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-mail input-icon-left"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"18"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"18"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"[39m
+                    [36m/>[39m
+                    [36m<rect[39m
+                      [33mheight[39m=[32m"16"[39m
+                      [33mrx[39m=[32m"2"[39m
+                      [33mwidth[39m=[32m"20"[39m
+                      [33mx[39m=[32m"2"[39m
+                      [33my[39m=[32m"4"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                  [36m<input[39m
+                    [33mautocomplete[39m=[32m"email"[39m
+                    [33mclass[39m=[32m"input input-with-icon "[39m
+                    [33mid[39m=[32m"login-email"[39m
+                    [33mname[39m=[32m"email"[39m
+                    [33mplaceholder[39m=[32m"name@company.com"[39m
+                    [33mtype[39m=[32m"email"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"input-group"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"input-label-row"[39m
+                [36m>[39m
+                  [36m<label[39m
+                    [33mfor[39m=[32m"login-password"[39m
+                  [36m>[39m
+                    [0mPassword[0m
+                  [36m</label>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"input-label-link"[39m
+                  [36m>[39m
+                    [0mForgot Password?[0m
+                  [36m</span>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"input-icon-wrapper"[39m
+                [36m>[39m
+                  [36m<svg[39m
+                    [33maria-hidden[39m=[32m"true"[39m
+                    [33mclass[39m=[32m"lucide lucide-lock input-icon-left"[39m
+                    [33mfill[39m=[32m"none"[39m
+                    [33mheight[39m=[32m"18"[39m
+                    [33mstroke[39m=[32m"currentColor"[39m
+                    [33mstroke-linecap[39m=[32m"round"[39m
+                    [33mstroke-linejoin[39m=[32m"round"[39m
+                    [33mstroke-width[39m=[32m"2"[39m
+                    [33mviewBox[39m=[32m"0 0 24 24"[39m
+                    [33mwidth[39m=[32m"18"[39m
+                    [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                  [36m>[39m
+                    [36m<rect[39m
+                      [33mheight[39m=[32m"11"[39m
+                      [33mrx[39m=[32m"2"[39m
+                      [33mry[39m=[32m"2"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mx[39m=[32m"3"[39m
+                      [33my[39m=[32m"11"[39m
+                    [36m/>[39m
+                    [36m<path[39m
+                      [33md[39m=[32m"M7 11V7a5 5 0 0 1 10 0v4"[39m
+                    [36m/>[39m
+                  [36m</svg>[39m
+                  [36m<input[39m
+                    [33mautocomplete[39m=[32m"current-password"[39m
+                    [33mclass[39m=[32m"input input-with-icon input-with-right-icon "[39m
+                    [33mid[39m=[32m"login-password"[39m
+                    [33mname[39m=[32m"password"[39m
+                    [33mplaceholder[39m=[32m"••••••••"[39m
+                    [33mtype[39m=[32m"password"[39m
+                  [36m/>[39m
+                  [36m<button[39m
+                    [33mclass[39m=[32m"input-icon-right-btn"[39m
+                    [33mtabindex[39m=[32m"-1"[39m
+                    [33mtype[39m=[32m"button"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33maria-hidden[39m=[32m"true"[39m
+                      [33mclass[39m=[32m"lucide lucide-eye"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"18"[39m
+                      [33mstroke[39m=[32m"currentColor"[39m
+                      [33mstroke-linecap[39m=[32m"round"[39m
+                      [33mstroke-linejoin[39m=[32m"round"[39m
+                      [33mstroke-width[39m=[32m"2"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"18"[39m
+                      [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33md[39m=[32m"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"[39m
+                      [36m/>[39m
+                      [36m<circle[39m
+                        [33mcx[39m=[32m"12"[39m
+                        [33mcy[39m=[32m"12"[39m
+                        [33mr[39m=[32m"3"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</button>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"btn btn-primary"[39m
+                [33mtype[39m=[32m"submit"[39m
+              [36m>[39m
+                [0mSign In[0m
+              [36m</button>[39m
+            [36m</form>[39m
+          [36m</div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"auth-footer"[39m
+          [36m>[39m
+            [0mDon't have an account? [0m
+            [36m<a[39m
+              [33mdata-discover[39m=[32m"true"[39m
+              [33mhref[39m=[32m"/register"[39m
+            [36m>[39m
+              [0mSign Up[0m
+            [36m</a>[39m
+          [36m</p>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"auth-dark-toggle"[39m
+          [33mtitle[39m=[32m"Toggle dark mode"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-moon"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"20"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"20"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</button>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+  [36m</body>[39m
+[36m</html>[39m
+[90m [2m❯[22m Proxy.waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:[2m163:27[22m[39m
+[36m [2m❯[22m src/tests/LoginForm.test.tsx:[2m61:15[22m[39m
+    [90m 59| [39m        await user.click(screen.getByRole('button', { name: 'Sign In' …
+    [90m 60| [39m
+    [90m 61| [39m        [35mawait[39m [34mwaitFor[39m(() [33m=>[39m {
+    [90m   | [39m              [31m^[39m
+    [90m 62| [39m            expect(screen.getByText('Please enter a valid email addres…
+    [90m 63| [39m        })[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m4 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 16:13:57
+[2m   Duration [22m 5.77s[2m (transform 222ms, setup 185ms, import 734ms, tests 3.39s, environment 1.16s)[22m
+

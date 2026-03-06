@@ -16,7 +16,10 @@ export const register = async (req: Request, res: Response) => {
 
         // Determine role based on admin secret code
         const expectedCode = process.env.ADMIN_SECRET_CODE || 'ADMIN2026';
-        const role = adminCode && adminCode === expectedCode ? 'admin' : 'user';
+        if (adminCode && adminCode !== expectedCode) {
+            return res.status(403).json({ message: 'Invalid admin code' });
+        }
+        const role = adminCode ? 'admin' : 'user';
 
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);

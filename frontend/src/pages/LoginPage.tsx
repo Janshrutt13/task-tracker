@@ -1,42 +1,36 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { CheckCircle, Mail, Lock, Eye, EyeOff, Moon, Sun } from 'lucide-react';
+import { loginSchema, type LoginFormData } from '../lib/validation';
 
 const LoginPage = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [error, setError] = useState('');
+    const [apiError, setApiError] = useState('');
     const [loading, setLoading] = useState(false);
     const { login } = useAuth();
     const { isDark, toggleDarkMode } = useTheme();
     const navigate = useNavigate();
 
-    const validate = (): boolean => {
-        if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-            setError('Please enter a valid email address');
-            return false;
-        }
-        if (password.length < 6) {
-            setError('Password must be at least 6 characters');
-            return false;
-        }
-        return true;
-    };
+    const {
+        register: registerField,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginFormData>({
+        resolver: zodResolver(loginSchema),
+    });
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError('');
-        if (!validate()) return;
-
+    const onSubmit = async (data: LoginFormData) => {
+        setApiError('');
         setLoading(true);
         try {
-            await login(email, password);
+            await login(data.email, data.password);
             navigate('/dashboard');
         } catch (err: any) {
-            setError(err.response?.data?.message || 'Login failed. Please try again.');
+            setApiError(err.response?.data?.message || 'Login failed. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -57,9 +51,9 @@ const LoginPage = () => {
                     <h2>Welcome Back!</h2>
                     <p className="subtitle">Sign in to continue managing your tasks.</p>
 
-                    {error && <div className="auth-error">{error}</div>}
+                    {apiError && <div className="auth-error">{apiError}</div>}
 
-                    <form className="auth-form" onSubmit={handleSubmit}>
+                    <form className="auth-form" onSubmit={handleSubmit(onSubmit)} noValidate>
                         {/* Email */}
                         <div className="input-group">
                             <label htmlFor="login-email">Email Address</label>
@@ -68,13 +62,15 @@ const LoginPage = () => {
                                 <input
                                     id="login-email"
                                     type="email"
-                                    className="input input-with-icon"
+                                    className={`input input-with-icon ${errors.email ? 'input-error' : ''}`}
                                     placeholder="name@company.com"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    {...registerField('email')}
                                     autoComplete="email"
                                 />
                             </div>
+                            {errors.email && (
+                                <p className="field-error">{errors.email.message}</p>
+                            )}
                         </div>
 
                         {/* Password */}
@@ -88,10 +84,9 @@ const LoginPage = () => {
                                 <input
                                     id="login-password"
                                     type={showPassword ? 'text' : 'password'}
-                                    className="input input-with-icon input-with-right-icon"
+                                    className={`input input-with-icon input-with-right-icon ${errors.password ? 'input-error' : ''}`}
                                     placeholder="••••••••"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    {...registerField('password')}
                                     autoComplete="current-password"
                                 />
                                 <button
@@ -103,6 +98,9 @@ const LoginPage = () => {
                                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                                 </button>
                             </div>
+                            {errors.password && (
+                                <p className="field-error">{errors.password.message}</p>
+                            )}
                         </div>
 
                         <button type="submit" className="btn btn-primary" disabled={loading}>

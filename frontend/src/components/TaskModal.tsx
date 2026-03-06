@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { createTask, updateTask } from '../api/tasks';
 import { toast } from './Toast';
 import type { Task } from '../types';
 import { X } from 'lucide-react';
+import { taskSchema, type TaskFormData } from '../lib/validation';
 
 interface TaskModalProps {
     isOpen: boolean;
@@ -14,51 +17,53 @@ interface TaskModalProps {
 const TaskModal = ({ isOpen, onClose, onSuccess, task }: TaskModalProps) => {
     const isEditing = !!task;
 
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [status, setStatus] = useState<'pending' | 'completed'>('pending');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+    const {
+        register: registerField,
+        handleSubmit,
+        reset,
+        formState: { errors, isSubmitting },
+    } = useForm<TaskFormData>({
+        resolver: zodResolver(taskSchema),
+        defaultValues: {
+            title: '',
+            description: '',
+            status: 'pending',
+        },
+    });
 
-    // Pre-fill form when editing
+    // Pre-fill form when editing, reset when creating
     useEffect(() => {
         if (task) {
-            setTitle(task.title);
-            setDescription(task.description || '');
-            setStatus(task.status);
+            reset({
+                title: task.title,
+                description: task.description || '',
+                status: task.status,
+            });
         } else {
-            setTitle('');
-            setDescription('');
-            setStatus('pending');
+            reset({
+                title: '',
+                description: '',
+                status: 'pending',
+            });
         }
-        setError('');
-    }, [task, isOpen]);
+    }, [task, isOpen, reset]);
 
     if (!isOpen) return null;
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError('');
-
-        if (title.trim().length < 3) {
-            setError('Title must be at least 3 characters long');
-            return;
-        }
-
-        setLoading(true);
+    const onSubmit = async (data: TaskFormData) => {
         try {
             if (isEditing && task) {
                 await updateTask(task.id, {
-                    title: title.trim(),
-                    description: description.trim() || undefined,
-                    status,
+                    title: data.title.trim(),
+                    description: data.description?.trim() || undefined,
+                    status: data.status,
                 });
                 toast.success('Task updated successfully!');
             } else {
                 await createTask({
-                    title: title.trim(),
-                    description: description.trim() || undefined,
-                    status,
+                    title: data.title.trim(),
+                    description: data.description?.trim() || undefined,
+                    status: data.status,
                 });
                 toast.success('Task created successfully!');
             }
@@ -68,10 +73,7 @@ const TaskModal = ({ isOpen, onClose, onSuccess, task }: TaskModalProps) => {
             const msg = err.response?.data?.message
                 || err.response?.data?.errors?.[0]
                 || `Failed to ${isEditing ? 'update' : 'create'} task`;
-            setError(msg);
             toast.error(msg);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -90,9 +92,7 @@ const TaskModal = ({ isOpen, onClose, onSuccess, task }: TaskModalProps) => {
                     </button>
                 </div>
 
-                {error && <div className="auth-error mb-4">{error}</div>}
-
-                <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+                <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex flex-col gap-1.5">
                         <label htmlFor="task-title" className="text-xs font-semibold text-slate-500 dark:text-slate-400">
                             Title *
@@ -100,12 +100,17 @@ const TaskModal = ({ isOpen, onClose, onSuccess, task }: TaskModalProps) => {
                         <input
                             id="task-title"
                             type="text"
-                            className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all"
+                            className={`w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all ${errors.title
+                                    ? 'border-red-400 dark:border-red-500'
+                                    : 'border-slate-200 dark:border-slate-700'
+                                }`}
                             placeholder="e.g., Build Dashboard UI"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
+                            {...registerField('title')}
                             autoFocus
                         />
+                        {errors.title && (
+                            <p className="text-xs text-red-500 font-medium">{errors.title.message}</p>
+                        )}
                     </div>
 
                     <div className="flex flex-col gap-1.5">
@@ -117,8 +122,7 @@ const TaskModal = ({ isOpen, onClose, onSuccess, task }: TaskModalProps) => {
                             className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all resize-y"
                             placeholder="Optional description..."
                             rows={3}
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                            {...registerField('description')}
                         />
                     </div>
 
@@ -129,8 +133,7 @@ const TaskModal = ({ isOpen, onClose, onSuccess, task }: TaskModalProps) => {
                         <select
                             id="task-status"
                             className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all"
-                            value={status}
-                            onChange={(e) => setStatus(e.target.value as 'pending' | 'completed')}
+                            {...registerField('status')}
                         >
                             <option value="pending">Pending</option>
                             <option value="completed">Completed</option>
@@ -148,9 +151,9 @@ const TaskModal = ({ isOpen, onClose, onSuccess, task }: TaskModalProps) => {
                         <button
                             type="submit"
                             className="px-5 py-2.5 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-opacity-90 transition-all shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                            disabled={loading}
+                            disabled={isSubmitting}
                         >
-                            {loading ? (
+                            {isSubmitting ? (
                                 <>
                                     <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
                                     {isEditing ? 'Updating...' : 'Creating...'}

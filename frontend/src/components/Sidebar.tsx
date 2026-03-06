@@ -108,15 +108,6 @@ const Sidebar = ({ taskCount, isOpen, onClose }: SidebarProps) => {
                         </nav>
                     </section>
                 </div>
-
-                <div className="mt-auto bg-slate-900 dark:bg-black rounded-2xl p-5 text-white relative overflow-hidden mt-6 flex-shrink-0">
-                    <div className="relative z-10">
-                        <p className="text-sm font-semibold mb-1">Download our Mobile App</p>
-                        <p className="text-[11px] text-slate-400 mb-4">Get easy in another way</p>
-                        <button className="w-full py-2 bg-primary hover:bg-primary/90 transition-colors rounded-lg text-xs font-semibold">Download</button>
-                    </div>
-                    <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-primary/20 rounded-full blur-2xl"></div>
-                </div>
             </aside>
         </>
     );

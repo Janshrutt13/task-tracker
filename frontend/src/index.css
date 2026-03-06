@@ -222,6 +222,17 @@ body {
     color: #FCA5A5;
 }
 
+.field-error {
+    font-size: 0.75rem;
+    color: #EF4444;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+.dark .field-error {
+    color: #FCA5A5;
+}
+
 .auth-footer {
     text-align: center;
     margin-top: 24px;
