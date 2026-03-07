@@ -18,8 +18,7 @@ Below are some screenshots showcasing the working application. *(To render these
 ### Login Page
 ![Login Page](./screenshots/login-page.png)
 
-### Completed UI Layout
-![Completed UI Layout](./screenshots/dashboard-donezo.png)
+
 
 ## 🚀 Features
 
