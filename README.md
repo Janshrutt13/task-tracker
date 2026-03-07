@@ -12,7 +12,7 @@ Below are some screenshots showcasing the working application. *(To render these
 ### User Dashboard (Jaspreet)
 ![User Dashboard Jaspreet](./screenshots/dashboard-jaspreet.png)
 
-### Alternate Dashboard View (John Doe)
+### Alternate Dashboard View (Admin)
 ![Alternate Dashboard View](./screenshots/dashboard-johndoe.png)
 
 ### Login Page
