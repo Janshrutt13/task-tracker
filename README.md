@@ -2,6 +2,25 @@
 
 A full-stack, comprehensive task management application designed for modern teams and individuals. Built with a robust backend and a highly responsive, aesthetically pleasing frontend, this project demonstrates production-ready patterns, secure authentication, and seamless user experiences.
 
+## 📸 App Screenshots
+
+Below are some screenshots showcasing the working application. *(To render these correctly, please save the provided images into a `screenshots/` directory at the root of the project with the corresponding filenames).*
+
+### Admin Users List
+![Admin Users List](./screenshots/admin-users-list.png)
+
+### User Dashboard (Jaspreet)
+![User Dashboard Jaspreet](./screenshots/dashboard-jaspreet.png)
+
+### Alternate Dashboard View (John Doe)
+![Alternate Dashboard View](./screenshots/dashboard-johndoe.png)
+
+### Login Page
+![Login Page](./screenshots/login-page.png)
+
+### Completed UI Layout
+![Completed UI Layout](./screenshots/dashboard-donezo.png)
+
 ## 🚀 Features
 
 - **Role-Based Access Control (RBAC):** Distinct roles for `Admin` and `User` ensure that data access is tightly controlled. 
