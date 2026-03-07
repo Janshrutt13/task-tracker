@@ -30,6 +30,43 @@ Below are some screenshots showcasing the working application. *(To render these
 - **Responsive Web UI:** A beautiful, responsive Bento-style dashboard providing a quick, visually clear overview of your tasks.
 - **Dark Mode Support:** Built-out semantic theming system that supports a full dark mode toggle for better accessibility and user preference.
 
+## 🧠 My Approach
+
+1. Database & Schema Design
+I chose Prisma with SQLite for its balance of simplicity and power.
+
+Relations: I implemented a One-to-Many relationship between User and Task.
+
+Normalization: Instead of storing raw strings for roles, I used a structured field to ensure only admin or user can be assigned, preventing data corruption.
+
+2. The "Dual-Layer" Security Model
+Security wasn't an afterthought; it was integrated into the routing layer:
+
+Authentication Layer: A global JWT middleware (verifyToken) validates the identity of every request.
+
+Authorization Layer (RBAC): A secondary middleware (isAdmin) specifically guards sensitive routes. This "Double-Lock" ensures a regular user can never access admin data, even if they have a valid login token.
+
+3. Frontend: Component-Driven Development
+I approached the UI by breaking down the design into Atomic Components.
+
+State Management: I used a "Single Source of Truth" pattern. Tasks are fetched at the top-level Dashboard and passed down, ensuring the UI stays in sync without redundant API calls.
+
+Responsiveness: I utilized Tailwind’s mobile-first breakpoints (sm, md, lg) to ensure the Bento-style grid scales gracefully from a desktop workstation to a mobile device.
+
+4. Robust Error Handling
+I implemented a "Graceful Failure" policy:
+
+Backend: Every controller is wrapped in try/catch blocks that return standardized JSON error messages and proper HTTP status codes (400, 401, 403, 404).
+
+Frontend: I integrated Zod for schema validation. This catches errors before they hit the network, reducing server load and providing instant feedback to the user.
+
+5. Testing Strategy
+My testing focused on the "Happy Path" and "Edge Cases":
+
+Unit Tests: Validated core logic like password hashing and JWT signing.
+
+Integration Tests: Simulated real-world scenarios, such as ensuring an unauthorized user is blocked from deleting another person's task.
+
 ## 💻 Tech Stack
 
 ### Frontend
